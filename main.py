@@ -1,10 +1,15 @@
 import os
 import json
-import requests
-from bs4 import BeautifulSoup
 from datetime import datetime
-from telegram_notifier import send_telegram_notification
-from config import PROJECT_URLS,DATA_FILE,DATE_FORMAT
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from config import PROJECT_URLS, DATA_FILE, DATE_FORMAT
+from scrapers.sobha_scraper import scrape as sobha_scrape
+from scrapers.godrej_scraper import scrape as godrej_scrape
+from scrapers.lntrealty_scraper import scrape as lntrealty_scrape
+from scrapers.assetz_scraper import scrape as assetz_scrape
 
 def load_project_data():
     """Load project data from local JSON file."""
@@ -18,68 +23,53 @@ def save_project_data(data):
     with open(DATA_FILE, "w") as f:
         json.dump(data, f, indent=2)
 
-def is_new_or_recent(project_name, data):
-    """Check if project is new or launched within the last 30 days."""
-    today = datetime.today()
-    if project_name not in data:
-        return True
-    date_found = datetime.strptime(data[project_name]["date_found"], DATE_FORMAT)
-    return (today - date_found).days <= 30
-
 def scrape_and_notify():
     """Scrape project URLs, notify about new launches, and record data."""
     project_data = load_project_data()
     today_str = datetime.today().strftime(DATE_FORMAT)
     updated = False
 
-    print("[🔍] Scraping Sobha websites...\n")
+    # Headers for Sobha requests
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive"
+    }
+
+    # Selenium setup for Godrej, L&T Realty, and Assetz
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--disable-webgl")
+    chrome_options.add_argument("--log-level=3")
+    chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+
+    print("[🔍] Scraping websites...\n")
 
     for url in PROJECT_URLS:
         try:
-            print(f"→ Scraping: {url}")
-            response = requests.get(url, timeout=10)
-            soup = BeautifulSoup(response.text, "html.parser")
-
-            project_divs = soup.find_all("div", class_="col-md-6 col-6 pr-md-5 mb-md-5 mb-4")
-
-            for div in project_divs:
-                name_tag = div.find("a", class_="d-flex")
-                project_name = name_tag.get_text(strip=True) if name_tag else "Unnamed"
-
-                image_link_tag = div.find("a", class_="d-block img-wrapper mb-4")
-                project_url = image_link_tag["href"] if image_link_tag else "N/A"
-
-                h3_tags = div.find_all("h3")
-                meta_info = " | ".join(tag.get_text(strip=True) for tag in h3_tags) if h3_tags else ""
-
-                new_launch_tag = div.find("span", class_="ml-auto units", string="New Launch")
-
-                if new_launch_tag:
-                    if is_new_or_recent(project_name, project_data):
-                        print(f"\n⚠️  [NEW LAUNCH] {project_name} — {project_url}")
-                        print(f"📍 {meta_info}")
-
-                        # Get previous message ID (if any)
-                        previous_message_id = project_data.get(project_name, {}).get("message_id")
-
-                        # Send notification
-                        new_message_id = send_telegram_notification(
-                            project_name, project_url, meta_info, previous_message_id
-                        )
-
-                        # Update JSON data
-                        if new_message_id:
-                            project_data[project_name] = {
-                                "url": project_url,
-                                "meta": meta_info,
-                                "date_found": today_str,
-                                "message_id": new_message_id
-                            }
-                            updated = True
-
+            if "sobha.com" in url:
+                project_data, was_updated = sobha_scrape(url, project_data, today_str, headers)
+                updated |= was_updated
+            elif "godrejproperties.com" in url:
+                project_data, was_updated = godrej_scrape(url, project_data, today_str, driver)
+                updated |= was_updated
+            elif "lntrealty.com" in url:
+                project_data, was_updated = lntrealty_scrape(url, project_data, today_str, driver)
+                updated |= was_updated
+            elif "assetzproperty.com" in url:
+                project_data, was_updated = assetz_scrape(url, project_data, today_str, driver)
+                updated |= was_updated
         except Exception as e:
-            print(f"[⚠️] Error scraping {url}: {e}")
+            print(f"[⚠️] Error processing {url}: {e}")
+            print(f"[DEBUG] Exception details: {type(e).__name__} - {str(e)}")
 
+    driver.quit()  # Close Selenium driver
     if updated:
         save_project_data(project_data)
         print("\n[💾] Project history updated.")

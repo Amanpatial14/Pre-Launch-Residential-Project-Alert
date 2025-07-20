@@ -2,19 +2,97 @@
   "SOBHA INFINIA": {
     "url": "https://www.sobha.com/bengaluru/sobha-infinia/",
     "meta": "Ultra-luxe Abodes | Koramangala, Bengaluru | 1768 - 3264 sq. ft. | 3 & 4 BHK",
-    "date_found": "2025-07-18",
-    "message_id": 98
+    "date_found": "2025-07-19",
+    "message_id": 110
   },
   "SOBHA TOWNPARK": {
     "url": "https://www.sobha.com/bengaluru/sobha-townpark/",
     "meta": "New York - Themed Luxury Apartments | Near Electronic City, Bengaluru  | 1240 - 2846 sq. ft.  | 2, 3 & 4 BHK",
-    "date_found": "2025-07-18",
-    "message_id": 99
+    "date_found": "2025-07-19",
+    "message_id": 111
   },
   "SOBHA AURUM": {
     "url": "https://www.sobha.com/delhi-ncr/sobha-aurum-sector-36-greater-noida/",
     "meta": "Luxury Abodes | Sector 36, Greater Noida | 739 sq. ft. \u2013 2306 sq. ft. | 1,2,3 & 4 Bed Residences",
-    "date_found": "2025-07-18",
-    "message_id": 100
+    "date_found": "2025-07-19",
+    "message_id": 112
+  },
+  "Godrej Alira": {
+    "url": "https://www.godrejproperties.com/gurugram/residential/godrej-alira",
+    "meta": "Sector 39, Gurugram | 5.58 Cr. onwards",
+    "date_found": "2025-07-20",
+    "message_id": 183
+  },
+  "Godrej Tiara": {
+    "url": "https://www.godrejproperties.com/bengaluru/residential/godrej-tiara",
+    "meta": "Yeshwanthpur, Bengaluru | 3.33 Cr. onwards",
+    "date_found": "2025-07-20",
+    "message_id": 184
+  },
+  "Godrej Majesty": {
+    "url": "https://www.godrejproperties.com/noida/residential/godrej-majesty",
+    "meta": "Sector 12, Noida | 2.90 Cr. onwards",
+    "date_found": "2025-07-20",
+    "message_id": 185
+  },
+  "Barca at Godrej MSR City": {
+    "url": "https://www.godrejproperties.com/bengaluru/residential/barca-at-godrej-msr-city",
+    "meta": "North, Bengaluru | 1.23 Cr. onwards",
+    "date_found": "2025-07-20",
+    "message_id": 186
+  },
+  "Godrej Astra": {
+    "url": "https://www.godrejproperties.com/gurugram/residential/godrej-astra",
+    "meta": "Sector 54, Gurugram | 10.34 Cr. onwards",
+    "date_found": "2025-07-20",
+    "message_id": 187
+  },
+  "Godrej Riverine": {
+    "url": "https://www.godrejproperties.com/noida/residential/godrej-riverine",
+    "meta": "Sector 44, Noida | 8.40 Cr. onwards",
+    "date_found": "2025-07-20",
+    "message_id": 188
+  },
+  "Godrej Miraya": {
+    "url": "https://www.godrejproperties.com/gurugram/residential/godrej-miraya",
+    "meta": "Sector 43, Golf Course Road, Gurugram | 14.80 Cr. onwards",
+    "date_found": "2025-07-20",
+    "message_id": 189
+  },
+  "Godrej Vrikshya\u200b": {
+    "url": "https://www.godrejproperties.com/gurugram/residential/godrej-vrikshya",
+    "meta": "Sector 103, Gurugram | 3.60 Cr. onwards",
+    "date_found": "2025-07-20",
+    "message_id": 190
+  },
+  "Elara Celestia": {
+    "url": "https://www.lntrealty.com/residences/elara-celestia-bengaluru/",
+    "meta": "Bengaluru",
+    "date_found": "2025-07-20",
+    "message_id": 192
+  },
+  "Zen & Sato": {
+    "url": "https://assetzzenandsato.com",
+    "meta": "New Launch | 1402 - 1962 SQFT(Total Rera Carpet Area + Balcony)2159 - 2955 SQFT                                     (SBUA)[3 & 4 BHK] Luxury Apartments | \u20b92.92 Crore onwards",
+    "date_found": "2025-07-20",
+    "message_id": 193
+  },
+  "The Secret Lake": {
+    "url": "https://assetzthesecretlake.com/",
+    "meta": "New Launch | 1200 - 3200 SQFT(Plot size)Luxury Plotted Development",
+    "date_found": "2025-07-20",
+    "message_id": 194
+  },
+  "Trees & Tandem": {
+    "url": "https://assetztreesandtandem.com/",
+    "meta": "New Launch | 1431 - 1647 SQFT(Total Rera Carpet Area + Balcony)1885 - 2142 SQFT                                     (SBUA)[3 BHK] Luxury Apartments | \u20b92.26 Crore onwards",
+    "date_found": "2025-07-20",
+    "message_id": 195
+  },
+  "Ren & Rei": {
+    "url": "https://assetzrenandrei.com/",
+    "meta": "New Launch | 1353 \u2013 1361 SQFT(Total RERA Carpet Area + Balcony)1796 - 1821 SQFT                                     (SBUA)[3 BHK] Luxury Apartments | \u20b91.89 Crore onwards",
+    "date_found": "2025-07-20",
+    "message_id": 196
   }
 }
